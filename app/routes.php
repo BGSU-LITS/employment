@@ -20,9 +20,7 @@ $container[IndexAction::class] = function (Container $container) {
         $container[Messages::class],
         $container[Session::class],
         $container[Twig::class],
-        $container[Swift_Mailer::class],
-        $container['settings']['mail']['to'],
-        $container['settings']['mail']['cc']
+        $container[Swift_Mailer::class]
     );
 };
 

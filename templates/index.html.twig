@@ -791,15 +791,32 @@ graduate student in order to be eligible for a position.</p>
             }}
         </div>
     </div>
-    <p><strong>Please email a copy of your class schedule to <a href="mailto:ltatham@bgsu.edu">ltatham@bgsu.edu</a>. A resume or examples of work can also be included as attachments. All resumes will remain on file for 6 months.</strong></p>
     <h4>Affirmative Action Policy</h4>
     <p>Bowling Green State University is an Affirmative Action/Equal Opportunity Educator and Employer. We are committeed to fostering a diverse and inclusive environment and strongly encourage applications from women, minorities, veterans, and individuals with disabilities regardless of age, gender identity, genetic information, religion, or sexual orientation.</p>
     <h4>Privacy Act Release</h4>
     <p>In accordance with the Family Educational Rights and Privacy Act, I consent to the release of my student employment file to  any prospective employer at the request of the employer or myself or upon referral by the office of Student Employement Services. I understand that all other request for my student employment information (agency programs, credit applications or graduate school request) must be authroized in writing by me.</p>
-    <div class="form-actions">
+    <hr>
+    <div>
         <p>Please submit a completed application to hiring manager via the button below.<br><strong>For questions, please contact Lisa Noward at <a href="mailto:ltatham@bgsu.edu">ltatham@bgsu.edu</a>.</strong></p>
-        <p><button type="submit" class="btn btn-primary">Email Submission</button></p>
-        {{ csrf_hidden|raw }}
+
+        <div class="control-group{% if 'manager' in errors %} alert alert-danger{% endif %}">
+            <label for="manager">Hiring Manager Email</label>
+            <div>
+                {{
+                    helper.input({
+                        type: 'email',
+                        name: 'manager',
+                        value: post.manager,
+                        attribs: {
+                            id: 'manager',
+                            required: true
+                        }
+                    })
+                    |raw
+                }}
+                <button type="submit" class="btn btn-primary">Email Submission</button>
+            </div>
+        </div>
     </div>
 </form>
 {% endblock %}

@@ -30,18 +30,6 @@ class IndexAction extends AbstractAction
     private $mailer;
 
     /**
-     * Address email should be sent to.
-     * @var string
-     */
-    private $mailTo;
-
-    /**
-     * Address email should be carbon copied to.
-     * @var string
-     */
-    private $mailCc;
-
-    /**
      * Field names that have errors.
      * @var array
      */
@@ -53,21 +41,15 @@ class IndexAction extends AbstractAction
      * @param Session $session Session manager.
      * @param Twig $view View renderer.
      * @param Swift_Mailer $mailer Email sender.
-     * @param string $mailTo Address email should be sent to.
-     * @param string $mailCc Address email should be carbon copied to.
      */
     public function __construct(
         Messages $flash,
         Session $session,
         Twig $view,
-        Swift_Mailer $mailer,
-        $mailTo,
-        $mailCc
+        Swift_Mailer $mailer
     ) {
         parent::__construct($flash, $session, $view);
         $this->mailer = $mailer;
-        $this->mailTo = $mailTo;
-        $this->mailCc = $mailCc;
     }
 
     /**
@@ -87,7 +69,6 @@ class IndexAction extends AbstractAction
             $args['post'] = $req->getParsedBody();
 
             try {
-                $this->validateCsrf($req);
                 $this->validateRequest($args);
                 $this->sendEmail($args);
 
@@ -118,7 +99,7 @@ class IndexAction extends AbstractAction
     {
         $required = [
             'graduation', 'name', 'id', 'email', 'rank', 'major', 'gpa',
-            'award', 'address', 'phone'
+            'award', 'address', 'phone', 'manager'
         ];
 
         foreach ($required as $key) {
@@ -148,22 +129,24 @@ class IndexAction extends AbstractAction
                 'You must specify a valid BGSU Email.'
             );
         }
+
+        if (!filter_var($args['post']['manager'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors[] = 'manager';
+
+            throw new RequestException(
+                'You must specify a valid Hiring Manager Email.'
+            );
+        }
     }
 
     private function sendEmail(array $args)
     {
         try {
-            $mailCc = [$args['post']['email']];
-
-            if (!empty($this->mailCc)) {
-                $mailCc[] = $this->mailCc;
-            }
-
             $message = $this->mailer->createMessage()
                 ->setSubject('Student Employment Application')
                 ->setFrom($args['post']['email'])
-                ->setTo($this->mailTo)
-                ->setCc($mailCc)
+                ->setTo($args['post']['manager'])
+                ->setCc($args['post']['email'])
                 ->setBody(
                     $this->view->fetch('email.html.twig', $args),
                     'text/html'
