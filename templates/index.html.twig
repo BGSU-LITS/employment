@@ -1,0 +1,835 @@
+{% set title = 'Student Employment Application' %}
+{% extends [settings.template.page, 'page.html.twig'] %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="https://www.bgsu.edu/">Bowling Green State University </a> /
+    <a href="https://www.bgsu.edu/library.html">University Libraries </a> /
+    <a href="https://www.bgsu.edu/library/about.html">About Us </a> /
+    <a href="https://www.bgsu.edu/library/about/ULEmployment.html">University Libraries Employment </a> /
+    {{ title }}
+</div>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+
+<p>Applicants must be enrolled at BGSU no less than 6 credit hours as an undergraduate student or 4 credit hours as a
+graduate student in order to be eligible for a position.</p>
+<form class="form-horizontal" method="post">
+    <div class="row">
+        <div class="span6">
+            <div class="control-group{% if 'date' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="date">Date</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'date',
+                            name: 'date',
+                            value: now|date('Y-m-d'),
+                            attribs: {
+                                id: 'date',
+                                disabled: true
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group{% if 'graduation' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="graduation">Estimated Date of Graduation</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'text',
+                            name: 'graduation',
+                            value: post.graduation,
+                            attribs: {
+                                id: 'graduation',
+                                required: true
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group{% if 'name' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="name">Applicant Name</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'text',
+                            name: 'name',
+                            value: post.name,
+                            attribs: {
+                                id: 'name',
+                                required: true
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group{% if 'id' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="id">BGSU ID#</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'text',
+                            name: 'id',
+                            value: post.id,
+                            attribs: {
+                                id: 'id',
+                                required: true
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group{% if 'email' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="email">BGSU Email</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'email',
+                            name: 'email',
+                            value: post.email,
+                            attribs: {
+                                id: 'email',
+                                required: true
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group{% if 'rank' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="rank">Class Rank</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'select',
+                            name: 'rank',
+                            value: post.rank,
+                            attribs: {
+                                id: 'rank',
+                                required: true
+                            },
+                            options: {
+                                '': '',
+                                'Freshman': 'Freshman',
+                                'Sophomore': 'Sophomore',
+                                'Junior': 'Junior',
+                                'Senior': 'Senior',
+                                'Graduate Student': 'Graduate Student'
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group{% if 'major' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="major">Major/Minor</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'text',
+                            name: 'major',
+                            value: post.major,
+                            attribs: {
+                                id: 'major',
+                                required: true
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="control-group{% if 'gpa' in errors %} alert alert-danger{% endif %}">
+                <label class="control-label" for="gpa">Cumulative GPA</label>
+                <div class="controls">
+                    {{
+                        helper.input({
+                            type: 'number',
+                            name: 'gpa',
+                            value: post.gpa,
+                            attribs: {
+                                id: 'gpa',
+                                required: true
+                            }
+                        })
+                        |raw
+                    }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="control-group{% if 'award' in errors %} alert alert-danger{% endif %}">
+        <label for="award">Have you received a Federal Work Study award?</label>
+        <div>
+            {{
+                helper.input({
+                    type: 'select',
+                    name: 'award',
+                    value: post.award,
+                    attribs: {
+                        id: 'award',
+                        required: true
+                    },
+                    options: {
+                        '': '',
+                        'Yes': 'Yes',
+                        'No': 'No'
+                    }
+                })
+                |raw
+            }}
+        </div>
+    </div>
+    <div class="control-group{% if 'award_amount' in errors %} alert alert-danger{% endif %}">
+        <label for="award_amount">If &ldquo;Yes,&rdquo; what is the total amount of the award?</label>
+        <div>
+            {{
+                helper.input({
+                    type: 'text',
+                    name: 'award_amount',
+                    value: post.award_amount,
+                    attribs: {
+                        id: 'award_amount'
+                    }
+                })
+                |raw
+            }}
+        </div>
+    </div>
+    <div class="control-group{% if 'hours' in errors %} alert alert-danger{% endif %}">
+        <label for="hours">Are you currently employed by BGSU? Please provide the number of hours you work at BGSU per week</label>
+        <div>
+            {{
+                helper.input({
+                    type: 'number',
+                    name: 'hours',
+                    value: post.hours,
+                    attribs: {
+                        id: 'hours'
+                    }
+                })
+                |raw
+            }}
+        </div>
+    </div>
+    <p><em>This information can be found by logging into your MyBGSU account and viewing your financial aid package.</em></p>
+    <div class="control-group{% if 'address' in errors %} alert alert-danger{% endif %}">
+        <label class="control-label" for="address">Local Address</label>
+        <div class="controls">
+            {{
+                helper.input({
+                    type: 'textarea',
+                    name: 'address',
+                    value: post.address,
+                    attribs: {
+                        id: 'address',
+                        required: true
+                    }
+                })
+                |raw
+            }}
+        </div>
+    </div>
+    <div class="control-group{% if 'phone' in errors %} alert alert-danger{% endif %}">
+        <label class="control-label" for="phone">Phone</label>
+        <div class="controls">
+            {{
+                helper.input({
+                    type: 'tel',
+                    name: 'phone',
+                    value: post.phone,
+                    attribs: {
+                        id: 'phone',
+                        required: true
+                    }
+                })
+                |raw
+            }}
+        </div>
+    </div>
+    <fieldset>
+        <legend>Current BGSU Employment</legend>
+        <div class="row">
+            <div class="span6">
+                <div class="control-group{% if 'current_continue' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_continue">Do you plan to continue working?</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'select',
+                                name: 'current_continue',
+                                value: post.current_continue,
+                                attribs: {
+                                    id: 'current_continue'
+                                },
+                                options: {
+                                    '': '',
+                                    'Yes': 'Yes',
+                                    'No': 'No'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'current_hours' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_hours">How many hours?</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'number',
+                                name: 'current_hours',
+                                value: post.current_hours,
+                                attribs: {
+                                    id: 'current_hours'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div class="control-group{% if 'current_employer' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_employer">Employer</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'current_employer',
+                                value: post.current_employer,
+                                attribs: {
+                                    id: 'current_employer'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'current_dates' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_dates">Dates</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'current_dates',
+                                value: post.current_dates,
+                                attribs: {
+                                    id: 'current_dates'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'current_supervisor' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_supervisor">Supervisor</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'current_supervisor',
+                                value: post.current_supervisor,
+                                attribs: {
+                                    id: 'current_supervisor'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'current_title' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_title">Job Title</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'current_title',
+                                value: post.current_title,
+                                attribs: {
+                                    id: 'current_title'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'current_phone' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_phone">Phone</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'tel',
+                                name: 'current_phone',
+                                value: post.current_phone,
+                                attribs: {
+                                    id: 'current_phone'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'current_duties' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="current_duties">Job Duties</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'current_duties',
+                                value: post.current_duties,
+                                attribs: {
+                                    id: 'current_duties'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Previous Employment</legend>
+        <div class="row">
+            <div class="span6">
+                <div class="control-group{% if 'previous1_employer' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous1_employer">Employer</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous1_employer',
+                                value: post.previous1_employer,
+                                attribs: {
+                                    id: 'previous1_employer'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous1_dates' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous1_dates">Dates</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous1_dates',
+                                value: post.previous1_dates,
+                                attribs: {
+                                    id: 'previous1_dates'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous1_supervisor' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous1_supervisor">Supervisor</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous1_supervisor',
+                                value: post.previous1_supervisor,
+                                attribs: {
+                                    id: 'previous1_supervisor'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous1_title' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous1_title">Job Title</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous1_title',
+                                value: post.previous1_title,
+                                attribs: {
+                                    id: 'previous1_title'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous1_phone' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous1_phone">Phone</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'tel',
+                                name: 'previous1_phone',
+                                value: post.previous1_phone,
+                                attribs: {
+                                    id: 'previous1_phone'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous1_duties' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous1_duties">Job Duties</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous1_duties',
+                                value: post.previous1_duties,
+                                attribs: {
+                                    id: 'previous1_duties'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span12">
+                <div class="control-group{% if 'previous1_leaving' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous1_leaving">Reason for Leaving</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'textarea',
+                                name: 'previous1_leaving',
+                                value: post.previous1_leaving,
+                                attribs: {
+                                    id: 'previous1_leaving'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Previous Employment</legend>
+        <div class="row">
+            <div class="span6">
+                <div class="control-group{% if 'previous2_employer' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous2_employer">Employer</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous2_employer',
+                                value: post.previous2_employer,
+                                attribs: {
+                                    id: 'previous2_employer'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous2_dates' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous2_dates">Dates</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous2_dates',
+                                value: post.previous2_dates,
+                                attribs: {
+                                    id: 'previous2_dates'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous2_supervisor' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous2_supervisor">Supervisor</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous2_supervisor',
+                                value: post.previous2_supervisor,
+                                attribs: {
+                                    id: 'previous2_supervisor'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous2_title' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous2_title">Job Title</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous2_title',
+                                value: post.previous2_title,
+                                attribs: {
+                                    id: 'previous2_title'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous2_phone' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous2_phone">Phone</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'tel',
+                                name: 'previous2_phone',
+                                value: post.previous2_phone,
+                                attribs: {
+                                    id: 'previous2_phone'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="control-group{% if 'previous2_duties' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous2_duties">Job Duties</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'text',
+                                name: 'previous2_duties',
+                                value: post.previous2_duties,
+                                attribs: {
+                                    id: 'previous2_duties'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+            <div class="span12">
+                <div class="control-group{% if 'previous2_leaving' in errors %} alert alert-danger{% endif %}">
+                    <label class="control-label" for="previous2_leaving">Reason for Leaving</label>
+                    <div class="controls">
+                        {{
+                            helper.input({
+                                type: 'textarea',
+                                name: 'previous2_leaving',
+                                value: post.previous2_leaving,
+                                attribs: {
+                                    id: 'previous2_leaving'
+                                }
+                            })
+                            |raw
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <hr>
+    <div class="control-group{% if 'additional' in errors %} alert alert-danger{% endif %}">
+        <label for="additional">Additional Information (special job related skills or experience you want to include, computer software, office equipment, etc.)</label>
+        <div>
+            {{
+                helper.input({
+                    type: 'textarea',
+                    name: 'additional',
+                    value: post.additional,
+                    attribs: {
+                        id: 'additional'
+                    }
+                })
+                |raw
+            }}
+        </div>
+    </div>
+    <div class="control-group{% if 'skills' in errors %} alert alert-danger{% endif %}">
+        Please select any of the following skills that may be beneficial for your employment:
+        <div class="row">
+            <div class="span6">
+                <label class="checkbox">
+                    {{
+                        helper.input({
+                            type: 'checkbox',
+                            name: 'skills_previous',
+                            value:  post.skills_previous,
+                            attribs: {
+                                id: 'skills_previous',
+                                value: 'yes'
+                            }
+                        })
+                        |raw
+                    }}
+                    Previous Library Experience
+                </label>
+                <label class="checkbox">
+                    {{
+                        helper.input({
+                            type: 'checkbox',
+                            name: 'skills_music',
+                            value:  post.skills_music,
+                            attribs: {
+                                id: 'skills_music',
+                                value: 'yes'
+                            }
+                        })
+                        |raw
+                    }}
+                    Music Knowledge
+                </label>
+            </div>
+            <div class="span6">
+                <label>
+                    Foreign Language Knowledge
+                    {{
+                        helper.input({
+                            type: 'text',
+                            name: 'skills_language',
+                            value: post.skills_language,
+                            attribs: {
+                                id: 'skills_language'
+                            }
+                        })
+                        |raw
+                    }}
+                </label>
+                <label>
+                    Extra Curricular Activities
+                    {{
+                        helper.input({
+                            type: 'text',
+                            name: 'skills_extra',
+                            value: post.skills_extra,
+                            attribs: {
+                                id: 'skills_extra'
+                            }
+                        })
+                        |raw
+                    }}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="control-group{% if 'depot' in errors %} alert alert-danger{% endif %}">
+        <label for="depot">*For Depository positions only. Do you have reliable transportation?</label>
+        <div>
+            {{
+                helper.input({
+                    type: 'select',
+                    name: 'depot',
+                    value: post.depot,
+                    attribs: {
+                        id: 'depot'
+                    },
+                    options: {
+                        '': '',
+                        'Yes': 'Yes',
+                        'No': 'No'
+                    }
+                })
+                |raw
+            }}
+        </div>
+    </div>
+    <p><strong>Please email a copy of your class schedule to <a href="mailto:ltatham@bgsu.edu">ltatham@bgsu.edu</a>. A resume or examples of work can also be included as attachments. All resumes will remain on file for 6 months.</strong></p>
+    <h4>Affirmative Action Policy</h4>
+    <p>Bowling Green State University is an Affirmative Action/Equal Opportunity Educator and Employer. We are committeed to fostering a diverse and inclusive environment and strongly encourage applications from women, minorities, veterans, and individuals with disabilities regardless of age, gender identity, genetic information, religion, or sexual orientation.</p>
+    <h4>Privacy Act Release</h4>
+    <p>In accordance with the Family Educational Rights and Privacy Act, I consent to the release of my student employment file to  any prospective employer at the request of the employer or myself or upon referral by the office of Student Employement Services. I understand that all other request for my student employment information (agency programs, credit applications or graduate school request) must be authroized in writing by me.</p>
+    <div class="form-actions">
+        <p>Please submit a completed application to hiring manager via the button below.<br><strong>For questions, please contact Lisa Noward at <a href="mailto:ltatham@bgsu.edu">ltatham@bgsu.edu</a>.</strong></p>
+        <p><button type="submit" class="btn btn-primary">Email Submission</button></p>
+        {{ csrf_hidden|raw }}
+    </div>
+</form>
+{% endblock %}
+
+{% block styles %}
+{{ parent() }}
+<style>
+select {
+    width: 220px;
+}
+
+.control-group.has-error {
+    background: #f2dede;
+}
+
+.control-group.has-error label {
+    color: #b94a48;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+{{ parent() }}
+<script>
+var elements = document.querySelectorAll('input,select,textarea');
+
+for (var i = elements.length; i--;) {
+    elements[i].addEventListener('invalid', function () {
+        this.scrollIntoView(false);
+    });
+}
+</script>
+{% endblock %}

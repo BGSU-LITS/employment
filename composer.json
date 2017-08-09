@@ -1,0 +1,28 @@
+{
+    "name": "bgsu-lits/employment",
+    "description": "BGSU Libraries student employement application.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Kloor",
+            "email": "kloor@bgsu.edu"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0",
+        "slim/csrf": "^0.7.0",
+        "slim/flash": "^0.1.0",
+        "slim/twig-view": "^2.1",
+        "data-uri/twig-extension": "^1.0",
+        "m1/env": "^2.0",
+        "aura/html": "2.x-dev",
+        "monolog/monolog": "^1.19",
+        "twig/twig": "^1.18",
+        "swiftmailer/swiftmailer": "~5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
