@@ -96,10 +96,10 @@ class IndexAction extends AbstractAction
                     'Your application has been sent.'
                 );
 
-//                return $res->withStatus(302)->withHeader(
-//                    'Location',
-//                    $req->getUri()->getBasePath()
-//                );
+                return $res->withStatus(302)->withHeader(
+                    'Location',
+                    $req->getUri()->getBasePath()
+                );
             } catch (RequestException $exception) {
                 $args['messages'][] = [
                     'level' => 'danger',
