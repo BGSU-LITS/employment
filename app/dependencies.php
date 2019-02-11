@@ -12,7 +12,6 @@ use Psr\Log\LoggerInterface;
 use Slim\Flash\Messages;
 use App\Session;
 use Slim\Views\Twig;
-use Swift_Mailer;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
