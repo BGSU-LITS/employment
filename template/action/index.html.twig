@@ -1,0 +1,285 @@
+{% extends 'page.html.twig' %}
+
+{% block styles %}
+{{ parent() }}
+<style>
+{% for error in errors %}
+form label[for="{{ error }}"]::after {
+    content: '\00a0✱';
+    color: #e3a492;
+}
+
+form :is(input, select, textarea)[name="{{ error }}"] {
+    border-color: #e3a492;
+}
+{% endfor %}
+</style>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+
+<form method="post">
+    <p>Applicants must be enrolled at BGSU no less than 6 credit hours as an undergraduate student or 4 credit hours as a graduate student in order to be eligible for a position.</p>
+
+    <div class="bgsu_common_form_table bgsu_common_form_table__fixed">
+        <div>
+            <label for="date">Date</label>
+            <div><input type="date" name="date" id="date" value="{{ 'now'|date('Y-m-d') }}" disabled></div>
+            <label for="graduation">Estimated Date of Graduation</label>
+            <div><input type="text" name="graduation" id="graduation" value="{{ post.graduation }}" required></div>
+        </div>
+        <div>
+            <label for="name">Applicant Name</label>
+            <div><input type="text" name="name" id="name" value="{{ post.name }}" required></div>
+            <label for="id">BGSU ID#</label>
+            <div><input type="text" name="id" id="id" value="{{ post.id }}" required></div>
+        </div>
+        <div>
+            <label for="email">BGSU Email</label>
+            <div><input type="email" name="email" id="email" value="{{ post.email }}" required></div>
+            <label for="rank">Class Rank</label>
+            <div>
+                <select name="rank" id="rank" required>
+                    <option{% if post.rank == 'Freshman' %} selected{% endif %}>Freshman</option>
+                    <option{% if post.rank == 'Sophomore' %} selected{% endif %}>Sophomore</option>
+                    <option{% if post.rank == 'Junior' %} selected{% endif %}>Junior</option>
+                    <option{% if post.rank == 'Senior' %} selected{% endif %}>Senior</option>
+                    <option{% if post.rank == 'Graduate Student' %} selected{% endif %}>Graduate Student</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <label for="major">Major/Minor</label>
+            <div><input type="text" name="major" id="major" value="{{ post.major }}" required></div>
+            <label for="gpa">Cumulative GPA</label>
+            <div><input type="number" name="gpa" id="gpa" value="{{ post.gpa }}" step="0.01" required></div>
+        </div>
+    </div>
+
+    <p>
+        <label for="award">Have you received a Federal Work Study award?</label><br>
+        <select name="award" id="award" required>
+            <option></option>
+            <option{% if post.award == 'Yes' %} selected{% endif %}>Yes</option>
+            <option{% if post.award == 'No' %} selected{% endif %}>No</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="award_amount">If “Yes,” what is the total amount of the award?</label><br>
+        <input type="text" name="award_amount" id="award_amount" value="{{ post.award_amount }}">
+    </p>
+
+    <p>
+        <label for="hours">Are you currently employed by BGSU? Please provide the number of hours you work at BGSU per week</label><br>
+        <input type="number" name="hours" id="hours" value="{{ post.hours }}">
+    </p>
+
+    <p><em>This information can be found by logging into your MyBGSU account and viewing your financial aid package.</em></p>
+
+    <div class="bgsu_common_form_table bgsu_common_form_table__fixed">
+        <div>
+            <label for="address" class="bgsu_common__top">Local Address</label>
+            <div><textarea name="address" id="address" required>{{ post.address }}</textarea></div>
+        </div>
+        <div>
+            <label for="phone">Phone</label>
+            <div><input type="tel" name="phone" id="phone" value="{{ post.phone }}" required></div>
+        </div>
+    </div>
+
+    <fieldset>
+        <legend>Current BGSU Employment</legend>
+        <div class="bgsu_common_form_table bgsu_common_form_table__fixed">
+            <div>
+                <label for="current_continue">Do you plan to continue working?</label>
+                <div>
+                    <select id="current_continue" value="{{ post.current_continue }}" name="current_continue">
+                        <option></option>
+                        <option{% if post.award == 'Yes' %} selected{% endif %}>Yes</option>
+                        <option{% if post.award == 'No' %} selected{% endif %}>No</option>
+                    </select>
+                </div>
+                <label for="current_hours">How many hours?</label>
+                <div>
+                    <input id="current_hours" value="{{ post.current_hours }}" type="number" name="current_hours">
+                </div>
+            </div>
+            <div>
+                <label for="current_employer">Employer</label>
+                <div>
+                    <input id="current_employer" value="{{ post.current_employer }}" type="text" name="current_employer">
+                </div>
+                <label for="current_dates">Dates</label>
+                <div>
+                    <input id="current_dates" value="{{ post.current_dates }}" type="text" name="current_dates">
+                </div>
+            </div>
+            <div>
+                <label for="current_supervisor">Supervisor</label>
+                <div>
+                    <input id="current_supervisor" value="{{ post.current_supervisor }}" type="text" name="current_supervisor">
+                </div>
+                <label for="current_title">Job Title</label>
+                <div>
+                    <input id="current_title" value="{{ post.current_title }}" type="text" name="current_title">
+                </div>
+            </div>
+            <div>
+                <label for="current_phone">Phone</label>
+                <div>
+                    <input id="current_phone" value="{{ post.current_phone }}" type="tel" name="current_phone">
+                </div>
+                <label for="current_duties">Job Duties</label>
+                <div>
+                    <input id="current_duties" value="{{ post.current_duties }}" type="text" name="current_duties">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Previous Employment</legend>
+        <div class="bgsu_common_form_table bgsu_common_form_table__fixed">
+            <div>
+                <label for="previous1_employer">Employer</label>
+                <div>
+                    <input id="previous1_employer" value="{{ post.previous1_employer }}" type="text" name="previous1_employer">
+                </div>
+                <label for="previous1_dates">Dates</label>
+                <div>
+                    <input id="previous1_dates" value="{{ post.previous1_dates }}" type="text" name="previous1_dates">
+                </div>
+            </div>
+            <div>
+                <label for="previous1_supervisor">Supervisor</label>
+                <div>
+                    <input id="previous1_supervisor" value="{{ post.previous1_supervisor }}" type="text" name="previous1_supervisor">
+                </div>
+                <label for="previous1_title">Job Title</label>
+                <div>
+                    <input id="previous1_title" value="{{ post.previous1_title }}" type="text" name="previous1_title">
+                </div>
+            </div>
+            <div>
+                <label for="previous1_phone">Phone</label>
+                <div>
+                    <input id="previous1_phone" value="{{ post.previous1_phone }}" type="tel" name="previous1_phone">
+                </div>
+                <label for="previous1_duties">Job Duties</label>
+                <div>
+                    <input id="previous1_duties" value="{{ post.previous1_duties }}" type="text" name="previous1_duties">
+                </div>
+            </div>
+            <div>
+                <label for="previous1_leaving">Reason for Leaving</label>
+                <div>
+                    <textarea id="previous1_leaving" name="previous1_leaving">{{ post.previous1_leaving }}</textarea>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Previous Employment</legend>
+        <div class="bgsu_common_form_table bgsu_common_form_table__fixed">
+            <div>
+                <label for="previous2_employer">Employer</label>
+                <div>
+                    <input id="previous2_employer" value="{{ post.previous2_employer }}" type="text" name="previous2_employer">
+                </div>
+                <label for="previous2_dates">Dates</label>
+                <div>
+                    <input id="previous2_dates" value="{{ post.previous2_dates }}" type="text" name="previous2_dates">
+                </div>
+            </div>
+            <div>
+                <label for="previous2_supervisor">Supervisor</label>
+                <div>
+                    <input id="previous2_supervisor" value="{{ post.previous2_supervisor }}" type="text" name="previous2_supervisor">
+                </div>
+                <label for="previous2_title">Job Title</label>
+                <div>
+                    <input id="previous2_title" value="{{ post.previous2_title }}" type="text" name="previous2_title">
+                </div>
+            </div>
+            <div>
+                <label for="previous2_phone">Phone</label>
+                <div>
+                    <input id="previous2_phone" value="{{ post.previous2_phone }}" type="tel" name="previous2_phone">
+                </div>
+                <label for="previous2_duties">Job Duties</label>
+                <div>
+                    <input id="previous2_duties" value="{{ post.previous2_duties }}" type="text" name="previous2_duties">
+                </div>
+            </div>
+            <div>
+                <label for="previous2_leaving">Reason for Leaving</label>
+                <div>
+                    <textarea id="previous2_leaving" name="previous2_leaving">{{ post.previous2_leaving }}</textarea>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <p>
+        <label for="">Additional Information (special job related skills or experience you want to include, computer software, office equipment, etc.)</label><br>
+        <textarea id="additional" name="additional">{{ post.additional }}</textarea>
+    </p>
+
+    <p>
+        Please select any of the following skills that may be beneficial for your employment:<br>
+        <label><input id="skills_previous" type="checkbox" name="skills_previous" value="yes"{% if post.skills_previous %} checked{% endif %}> Previous Library Experience</label><br>
+        <label><input id="skills_music" type="checkbox" name="skills_music" value="yes"{% if post.skills_music %} checked{% endif %}> Music Knowledge</label>
+    </p>
+
+    <div class="bgsu_common_form_table">
+        <div>
+            <label for="skills_language">Foreign Language Knowledge</label>
+            <div>
+                <input id="skills_language" value="{{ post.skills_language }}" type="text" name="skills_language">
+            </div>
+        </div>
+        <div>
+            <label for="skills_extra">Extra Curricular Activities</label>
+            <div>
+                <input id="skills_extra" value="{{ post.skills_extra }}" type="text" name="skills_extra">
+            </div>
+        </div>
+    </div>
+
+    <p>
+        <label for="">*For Depository positions only. Do you have reliable transportation?</label><br>
+        <select id="depot" value="{{ post.depot }}" name="depot">
+            <option></option>
+            <option{% if post.award == 'Yes' %} selected{% endif %}>Yes</option>
+            <option{% if post.award == 'No' %} selected{% endif %}>No</option>
+        </select>
+    </p>
+
+    <p>
+        <strong>Affirmative Action Policy</strong><br>
+        Bowling Green State University is an Affirmative Action/Equal Opportunity Educator and Employer. We are committeed to fostering a diverse and inclusive environment and strongly encourage applications from women, minorities, veterans, and individuals with disabilities regardless of age, gender identity, genetic information, religion, or sexual orientation.
+    </p>
+
+    <p>
+        <strong>Privacy Act Release</strong><br>
+        In accordance with the Family Educational Rights and Privacy Act, I consent to the release of my student employment file to any prospective employer at the request of the employer or myself or upon referral by the office of Student Employement Services. I understand that all other request for my student employment information (agency programs, credit applications or graduate school request) must be authroized in writing by me.
+    </p>
+
+    <hr>
+
+    <p>
+        Please submit a completed application to hiring manager via the button below.<br>
+        <strong>For questions, please contact Lisa Noward at <a href="mailto:ltatham@bgsu.edu">ltatham@bgsu.edu</a>.</strong>
+    </p>
+
+    <p>
+        <label for="manager">Hiring Manager Email</label><br>
+        <input id="manager" value="{{ post.manager }}" type="email" name="manager" required />
+        <button type="submit" class="bgsu_common_button bgsu_common_button__primary bgsu_common_button__small">Email Submission</button>
+    </p>
+</form>
+
+{% endblock %}

@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+    <body>
+        <h1 style="margin:0 0 10px 0">Student Employment Application</h1>
+        <table border="0" cellspacing="0" cellpadding="0" style="margin:0 0 10px 0">
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left" width="25%">Date</th>
+                <td>{{ now|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Estimated Date of Graduation</th>
+                <td>{{ post.graduation }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Applicant Name</th>
+                <td>{{ post.name }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">BGSU ID#</th>
+                <td>{{ post.id }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">BGSU Email</th>
+                <td>{{ post.email }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Class Rank</th>
+                <td>{{ post.rank }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Major/Minor</th>
+                <td>{{ post.major }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Cumulative GPA</th>
+                <td>{{ post.gpa }}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="padding:1em 0 0 0;text-align:left">
+                    Have you received a Federal Work Study award?
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">{{ post.award }}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="padding:1em 0 0 0;text-align:left">
+                    If "Yes," what is the total amount of the award?
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">{{ post.award_amount }}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="padding:1em 0 0 0;text-align:left">
+                    Are you currently employed by BGSU? Please provide the number of hours you work at BGSU per week
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:0 0 1em 0">{{ post.hours }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Local Address</th>
+                <td>{{ post.address|nl2br }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Phone</th>
+                <td>{{ post.phone }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><h2 style="margin:1em 0 10px 0">Current BGSU Employment</h2></td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Do you plan to continue working?</th>
+                <td>{{ post.current_continue }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">How many hours?</th>
+                <td>{{ post.current_hours }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Employer</th>
+                <td>{{ post.current_employer }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Dates</th>
+                <td>{{ post.current_dates }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Supervisor</th>
+                <td>{{ post.current_supervisor }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Phone</th>
+                <td>{{ post.current_phone }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Job Title</th>
+                <td>{{ post.current_title }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Job Duties</th>
+                <td>{{ post.current_duties }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><h2 style="margin:1em 0 10px 0">Previous Employment</h2></td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Employer</th>
+                <td>{{ post.previous1_employer }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Dates</th>
+                <td>{{ post.previous1_dates }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Supervisor</th>
+                <td>{{ post.previous1_supervisor }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Phone</th>
+                <td>{{ post.previous1_phone }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Job Title</th>
+                <td>{{ post.previous1_title }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Job Duties</th>
+                <td>{{ post.previous1_duties }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Reason for Leaving</th>
+                <td>{{ post.previous1_leaving }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><h2 style="margin:1em 0 10px 0">Previous Employment</h2></td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Employer</th>
+                <td>{{ post.previous2_employer }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Dates</th>
+                <td>{{ post.previous2_dates }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Supervisor</th>
+                <td>{{ post.previous2_supervisor }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Phone</th>
+                <td>{{ post.previous2_phone }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Job Title</th>
+                <td>{{ post.previous2_title }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Job Duties</th>
+                <td>{{ post.previous2_duties }}</td>
+            </tr>
+            <tr>
+                <th style="padding:0 1em 0 0;text-align:left">Reason for Leaving</th>
+                <td>{{ post.previous2_leaving }}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="padding:1em 0 0 0;text-align:left">
+                    Additional Information (special job related skills or experience you want to include, computer software, office equipment, etc.)
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">{{ post.additional }}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="padding:1em 0 0 0;text-align:left">
+                    Please select any of the following skills that may be beneficial for your employment:
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {% if post.skills_previous %}Previous Library Experience<br>{% endif %}
+                    {% if post.skills_music %}Music Knowledge<br>{% endif %}
+                    {% if post.skills_language %}Foreign Language Knowledge: {{ post.skills_language }}<br>{% endif %}
+                    {% if post.skills_extra %}Extra Curricular Activities: {{ post.skills_extra }}<br>{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2" style="padding:1em 0 0 0;text-align:left">
+                    *For Depository positions only. Do you have reliable transportation?
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:0 0 1em 0">{{ post.depot }}</td>
+            </tr>
+        </table>
+    </body>
+</html>
