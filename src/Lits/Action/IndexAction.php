@@ -63,16 +63,12 @@ final class IndexAction extends Action
         'manager' => true,
     ];
 
-    private Mail $mail;
-
-    /** @var string[] $errors */
+    /** @var array<string> $errors */
     private array $errors = [];
 
-    public function __construct(ActionService $service, Mail $mail)
+    public function __construct(ActionService $service, private Mail $mail)
     {
         parent::__construct($service);
-
-        $this->mail = $mail;
     }
 
     /** @throws HttpInternalServerErrorException */
@@ -84,7 +80,7 @@ final class IndexAction extends Action
                 [
                     'errors' => $this->session->get('errors'),
                     'post' => $this->session->get('post'),
-                ]
+                ],
             );
 
             $this->session->remove('errors');
@@ -93,7 +89,7 @@ final class IndexAction extends Action
             throw new HttpInternalServerErrorException(
                 $this->request,
                 null,
-                $exception
+                $exception,
             );
         }
     }
@@ -105,7 +101,7 @@ final class IndexAction extends Action
     public function post(
         ServerRequest $request,
         Response $response,
-        array $data
+        array $data,
     ): Response {
         $this->setup($request, $response, $data);
 
@@ -120,7 +116,7 @@ final class IndexAction extends Action
             throw new HttpInternalServerErrorException(
                 $this->request,
                 'Could not process posted data',
-                $exception
+                $exception,
             );
         }
 
@@ -149,7 +145,7 @@ final class IndexAction extends Action
 
         if ($this->errors !== []) {
             throw new InvalidDataException(
-                'You must specify all required fields.'
+                'You must specify all required fields.',
             );
         }
 
@@ -171,7 +167,7 @@ final class IndexAction extends Action
             $this->errors[] = 'email';
 
             throw new InvalidDataException(
-                'You must specify a valid BGSU Email.'
+                'You must specify a valid BGSU Email.',
             );
         }
 
@@ -182,7 +178,7 @@ final class IndexAction extends Action
             $this->errors[] = 'manager';
 
             throw new InvalidDataException(
-                'You must specify a valid Hiring Manager Email.'
+                'You must specify a valid Hiring Manager Email.',
             );
         }
     }
@@ -199,7 +195,7 @@ final class IndexAction extends Action
         ) {
             throw new HttpInternalServerErrorException(
                 $this->request,
-                'Could not address mail'
+                'Could not address mail',
             );
         }
 
@@ -217,13 +213,13 @@ final class IndexAction extends Action
             throw new HttpInternalServerErrorException(
                 $this->request,
                 'Could not send mail',
-                $exception
+                $exception,
             );
         }
 
         $this->message(
             'success',
-            'Your application has been sent.'
+            'Your application has been sent.',
         );
     }
 }
